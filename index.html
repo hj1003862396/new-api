@@ -356,7 +356,7 @@
     .button--text { color: var(--muted); }
     .button--text:hover { background: #222b1f; color: var(--accent2); }
     .page { padding-top: 62px; padding-bottom: 96px; }
-    .intro { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 220px; align-items: end; gap: 28px; margin-bottom: 0; padding: 0 0 34px; border-bottom: 1px solid var(--border); }
+    .intro { position: relative; display: block; margin-bottom: 0; padding: 0 0 34px; border-bottom: 1px solid var(--border); }
     .intro::after { content: ""; position: absolute; bottom: -1px; left: 0; width: 128px; height: 3px; background: var(--accent2); }
     .eyebrow { margin-bottom: 15px; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--accent2); font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 11px; letter-spacing: .12em; }
     .eyebrow::before { content: ">_"; font-size: 12px; }
@@ -496,7 +496,7 @@
     .button--text { background: transparent; color: var(--muted); }
     .button--text:hover { background: #f0f1ee; color: var(--text); }
     .intro { border-bottom-color: var(--border); }
-    .intro::after { background: var(--accent2); }
+    .intro::after { display: none; }
     .eyebrow { color: var(--accent2); }
     h1 { color: var(--text); }
     .intro__copy { color: var(--muted); }
@@ -577,14 +577,13 @@
       0%, 100% { box-shadow: 0 0 0 3px var(--success-soft); }
       50% { box-shadow: 0 0 0 6px rgba(32, 122, 57, 0); }
     }
-    .eyebrow, .intro h1, .intro__copy, .availability {
+    .eyebrow, .intro h1, .intro__copy {
       opacity: 0;
       animation: route-fade-up .6s cubic-bezier(.2,.8,.2,1) both;
     }
     .eyebrow { animation-delay: 0s; }
     .intro h1 { animation-delay: .06s; }
     .intro__copy { animation-delay: .12s; }
-    .availability { animation-delay: .18s; }
     .pricing-table tbody tr {
       opacity: 0;
       animation: route-fade-up .5s cubic-bezier(.2,.8,.2,1) both;
@@ -605,7 +604,7 @@
     .button .icon, .method__action .icon, .pricing-link .icon { transition: transform .2s ease; }
     .button:hover .icon, .method:hover .method__action .icon, .pricing-link:hover .icon { transform: translateX(3px); }
     @media (prefers-reduced-motion: reduce) {
-      .eyebrow, .intro h1, .intro__copy, .availability, .pricing-table tbody tr {
+      .eyebrow, .intro h1, .intro__copy, .pricing-table tbody tr {
         opacity: 1;
         animation: none;
       }
@@ -631,9 +630,8 @@
       grid-template-columns: minmax(0, 1fr) auto;
       grid-template-areas:
         "plan rate"
-        "models models"
-        "status actions";
-      gap: 17px 16px;
+        "health health";
+      gap: 18px 16px;
       min-width: 0;
       padding: 19px;
       border: 1px solid var(--border);
@@ -645,22 +643,35 @@
     .pricing-table td { min-width: 0; height: auto; padding: 0; border: 0; }
     .pricing-table td::before { display: none; }
     .pricing-table td:nth-child(1) { grid-area: plan; }
-    .pricing-table td:nth-child(2) { grid-area: rate; align-self: start; }
-    .pricing-table td:nth-child(3) { grid-area: status; align-self: center; }
-    .pricing-table td:nth-child(4) { grid-area: models; padding: 14px 0; border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
-    .pricing-table td:nth-child(5) { grid-area: actions; align-self: center; }
-    .row-actions { gap: 12px; }
+    .pricing-table td:nth-child(2) { grid-area: rate; justify-self: end; align-self: start; }
+    .pricing-table td:nth-child(3) { grid-area: health; padding-top: 14px; border-top: 1px solid var(--border-soft); }
     .plan__name { font-size: 15px; }
     .plan__type { font-size: 12px; }
-    .models { gap: 5px; }
-    .model-tag { max-width: 170px; }
+    .rate-pill { display: grid; justify-items: end; min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; font-size: 18px; line-height: 1; letter-spacing: -.04em; }
+    .rate-pill small { margin: 4px 0 0; color: var(--subtle); font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 9px; font-weight: 650; letter-spacing: .08em; }
+    .pricing-table tbody tr:hover .rate-pill, .pricing-table tbody tr:hover:has(.plan__icon--claude) .rate-pill { border-color: transparent; background: transparent; }
+    .model-availability { display: grid; }
+    .model-availability__rows { display: grid; gap: 8px; }
+    .availability-row { display: grid; grid-template-columns: 112px minmax(0, 1fr); align-items: center; gap: 14px; }
+    .availability-row__name { overflow: hidden; color: var(--text); font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 10px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+    .availability-row__status { display: grid; min-width: 0; gap: 4px; }
+    .availability-row__history { position: relative; display: block; min-width: 0; padding-right: 58px; }
+    .availability-row__latency { position: absolute; top: 50%; right: 0; width: 48px; transform: translateY(-50%); color: var(--muted); font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 10px; text-align: right; }
+    .availability-strip { display: grid; grid-template-columns: repeat(48, minmax(2px, 1fr)); align-items: stretch; gap: 3px; height: 18px; padding: 3px 0; direction: rtl; }
+    .availability-strip span { min-width: 0; border-radius: 2px; background: #d9ddd8; }
+    .availability-strip span:nth-child(-n + 8) { background: #25bd91; }
+    .availability-strip .availability-strip__degraded { background: #f3b928; }
+    .availability-strip .availability-strip__incident { background: #ef725d; }
+    .pricing-table tbody tr:hover .availability-strip span { filter: saturate(1.12) brightness(.96); }
     @media (max-width: 720px) {
       .pricing-table tbody { grid-template-columns: 1fr; padding: 0; gap: 10px; }
       .pricing-table tbody tr { border-right: 0; border-left: 0; border-radius: 0; padding: 18px 14px; }
       .pricing-table tbody tr:first-child { border-top: 0; }
       .pricing-table tbody tr:last-child { border-bottom: 0; }
-      .pricing-table td:nth-child(4) { padding: 12px 0; }
-      .row-actions { justify-content: flex-end; }
+      .pricing-table td:nth-child(3) { padding-top: 12px; }
+      .availability-row { grid-template-columns: 86px minmax(0, 1fr); gap: 8px; }
+      .availability-row__history { padding-right: 52px; }
+      .availability-row__latency { width: 44px; }
       .tutorial { display: block; }
       .video-preview { display: block; width: 100%; max-width: 100%; min-height: 230px; }
     }
@@ -712,41 +723,32 @@
         <div>
           <h1 id="pricing-title">云析AI</h1>
         </div>
-        <div class="availability"><span class="status-dot"></span>当前所有服务运行正常</div>
       </div>
 
       <div class="panel">
         <table class="pricing-table">
           <colgroup><col style="width: 20%"><col style="width: 10%"><col style="width: 11%"><col style="width: 39%"><col style="width: 20%"></colgroup>
-          <thead><tr><th>套餐</th><th>价格倍率</th><th>状态</th><th>可用模型</th><th>操作</th></tr></thead>
+          <thead><tr><th>套餐</th><th>价格倍率</th><th>模型可用性</th></tr></thead>
           <tbody>
             <tr>
               <td data-label="套餐"><div class="plan"><span class="plan__icon"><svg class="icon" aria-hidden="true"><use href="#i-terminal"></use></svg></span><span><span class="plan__name">Codex Plus</span><span class="plan__type">高性价比通道</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">0.1x<small>倍率</small></span></td>
-              <td data-label="状态"><span class="status-pill"><span class="status-dot"></span>可用</span></td>
-              <td data-label="代表模型"><div class="models"><span class="model-tag">gpt-5.3-codex</span><span class="model-tag">gpt-5.2-codex</span><span class="model-tag">gpt-5.1-codex-max</span><span class="model-more">更多</span></div></td>
-              <td data-label="操作"><div class="row-actions"><a class="pricing-link" href="http://156.225.27.56:3000/pricing" target="_blank" rel="noopener noreferrer">全部模型<svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg></a><button class="button button--small" type="button" data-plan-install="codex">安装</button></div></td>
+              <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">gpt-5.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">148 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">gpt-5.6-codex</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">172 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">96 ms</span></div></div></div></div></div></td>
             </tr>
             <tr>
               <td data-label="套餐"><div class="plan"><span class="plan__icon"><svg class="icon" aria-hidden="true"><use href="#i-terminal"></use></svg></span><span><span class="plan__name">Codex Pro</span><span class="plan__type">稳定优先通道</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">0.2x<small>倍率</small></span></td>
-              <td data-label="状态"><span class="status-pill"><span class="status-dot"></span>可用</span></td>
-              <td data-label="代表模型"><div class="models"><span class="model-tag">gpt-5.3-codex</span><span class="model-tag">gpt-5.2-codex</span><span class="model-tag">gpt-5.1-codex-mini</span><span class="model-more">更多</span></div></td>
-              <td data-label="操作"><div class="row-actions"><a class="pricing-link" href="http://156.225.27.56:3000/pricing" target="_blank" rel="noopener noreferrer">全部模型<svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg></a><button class="button button--small" type="button" data-plan-install="codex">安装</button></div></td>
+              <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">gpt-5.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">121 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">gpt-5.6-codex</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__degraded"></span><span class="availability-strip__degraded"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">286 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">103 ms</span></div></div></div></div></div></td>
             </tr>
             <tr>
               <td data-label="套餐"><div class="plan"><span class="plan__icon plan__icon--claude"><svg class="icon" aria-hidden="true"><use href="#i-spark"></use></svg></span><span><span class="plan__name">Claude Code 低价</span><span class="plan__type">日常开发通道</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">0.1x<small>倍率</small></span></td>
-              <td data-label="状态"><span class="status-pill"><span class="status-dot"></span>可用</span></td>
-              <td data-label="代表模型"><div class="models"><span class="model-tag">claude-opus-4.6</span><span class="model-tag">claude-sonnet-4.6</span><span class="model-tag">claude-haiku-4.5</span><span class="model-more">更多</span></div></td>
-              <td data-label="操作"><div class="row-actions"><a class="pricing-link" href="http://156.225.27.56:3000/pricing" target="_blank" rel="noopener noreferrer">全部模型<svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg></a><button class="button button--small" type="button" data-plan-install="claude">安装</button></div></td>
+              <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">claude-opus-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">214 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">claude-sonnet-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">168 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__degraded"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">241 ms</span></div></div></div></div></div></td>
             </tr>
             <tr>
               <td data-label="套餐"><div class="plan"><span class="plan__icon plan__icon--claude"><svg class="icon" aria-hidden="true"><use href="#i-spark"></use></svg></span><span><span class="plan__name">Claude Code 稳定</span><span class="plan__type">稳定优先通道</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">0.2x<small>倍率</small></span></td>
-              <td data-label="状态"><span class="status-pill"><span class="status-dot"></span>可用</span></td>
-              <td data-label="代表模型"><div class="models"><span class="model-tag">claude-opus-4.6</span><span class="model-tag">claude-sonnet-4.6</span><span class="model-tag">claude-haiku-4.5</span><span class="model-more">更多</span></div></td>
-              <td data-label="操作"><div class="row-actions"><a class="pricing-link" href="http://156.225.27.56:3000/pricing" target="_blank" rel="noopener noreferrer">全部模型<svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg></a><button class="button button--small" type="button" data-plan-install="claude">安装</button></div></td>
+              <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">claude-opus-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">189 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">claude-sonnet-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__degraded"></span><span class="availability-strip__degraded"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">329 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__incident"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">—</span></div></div></div></div></div></td>
             </tr>
           </tbody>
         </table>
@@ -1013,9 +1015,6 @@
     });
     document.querySelectorAll('[data-method]').forEach((button) => {
       button.addEventListener('click', () => openInstallGuide(activeProduct, button.dataset.method, button));
-    });
-    document.querySelectorAll('[data-plan-install]').forEach((button) => {
-      button.addEventListener('click', () => openInstallGuide(button.dataset.planInstall, 'cli', button));
     });
     document.querySelector('[data-recharge-guide]').addEventListener('click', (event) => openRechargeGuide(event.currentTarget));
     document.querySelector('[data-modal-close]').addEventListener('click', closeModal);
