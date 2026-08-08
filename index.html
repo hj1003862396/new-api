@@ -657,11 +657,12 @@
     .availability-row__status { display: grid; min-width: 0; gap: 4px; }
     .availability-row__history { position: relative; display: block; min-width: 0; padding-right: 58px; }
     .availability-row__latency { position: absolute; top: 50%; right: 0; width: 48px; transform: translateY(-50%); color: var(--muted); font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 10px; text-align: right; }
-    .availability-strip { display: grid; grid-template-columns: repeat(48, minmax(2px, 1fr)); align-items: stretch; gap: 3px; height: 18px; padding: 3px 0; direction: rtl; }
+    .availability-strip { display: grid; grid-template-columns: repeat(48, minmax(2px, 1fr)); align-items: stretch; gap: 3px; height: 18px; padding: 3px 0; }
     .availability-strip span { min-width: 0; border-radius: 2px; background: #d9ddd8; }
-    .availability-strip span:nth-child(-n + 8) { background: #25bd91; }
-    .availability-strip .availability-strip__degraded { background: #f3b928; }
-    .availability-strip .availability-strip__incident { background: #ef725d; }
+    .availability-strip span.availability-strip__up { background: #25bd91; }
+    .availability-strip span.availability-strip__pending { background: #d9ddd8; }
+    .availability-strip span.availability-strip__degraded { background: #f3b928; }
+    .availability-strip span.availability-strip__incident { background: #ef725d; }
     .pricing-table tbody tr:hover .availability-strip span { filter: saturate(1.12) brightness(.96); }
     @media (max-width: 720px) {
       .pricing-table tbody { grid-template-columns: 1fr; padding: 0; gap: 10px; }
@@ -888,6 +889,118 @@
       command: '',
       note: '当前页面预留了视频位置，配置真实教程地址后即可直接播放。'
     };
+
+    const uptimeMonitorConfigs = [
+      { planName: 'Codex Plus', modelName: 'gpt-5.6-sol', monitorName: 'Codex Plus sol' },
+      { planName: 'Codex Plus', modelName: 'gpt-5.6-terra', monitorName: 'Codex Plus terra' },
+      { planName: 'Codex Plus', modelName: 'gpt-5.6-luna', monitorName: 'Codex Plus luna' },
+      { planName: 'Codex Pro', modelName: 'gpt-5.6-sol', monitorName: 'Codex Pro sol' },
+      { planName: 'Codex Pro', modelName: 'gpt-5.6-terra', monitorName: 'Codex pro terra' },
+      { planName: 'Codex Pro', modelName: 'gpt-5.6-luna', monitorName: 'Codex Pro luna' },
+      { planName: 'Claude Code 低价', modelName: 'claude-sonnet-5', monitorName: 'cc claude-sonnet-5' },
+      { planName: 'Claude Code 低价', modelName: 'claude-opus-5', monitorName: 'cc claude-opus-5' },
+      { planName: 'Claude Code 低价', modelName: 'claude-haiku-4-5', monitorName: 'cc claude-haiku-4-5' },
+      { planName: 'Claude Code 稳定', modelName: 'claude-sonnet-5', monitorName: 'ccmax claude-sonnet-5' },
+      { planName: 'Claude Code 稳定', modelName: 'claude-opus-5', monitorName: 'ccmax claude-opus-5' },
+      { planName: 'Claude Code 稳定', modelName: 'claude-haiku-4-5', monitorName: 'ccmax claude-haiku-4-5' },
+    ];
+    const statusLabels = { 0: '异常', 1: '正常', 2: '检测中', 3: '维护中' };
+    const statusClasses = { 0: 'availability-strip__incident', 1: 'availability-strip__up', 2: 'availability-strip__pending', 3: 'availability-strip__degraded' };
+    const uptimeKumaBaseUrl = 'http://156.225.27.56:3001';
+    const uptimeKumaStatusPageSlug = 'all';
+    const uptimeStatusRows = [];
+    const refreshedPlanRows = new Set();
+
+    for (const config of uptimeMonitorConfigs) {
+      const rows = [...document.querySelectorAll('.model-availability__rows')]
+        .find((item) => item.closest('tr')?.querySelector('.plan__name')?.textContent === config.planName);
+      if (!rows) continue;
+      if (!refreshedPlanRows.has(rows)) {
+        rows.replaceChildren();
+        refreshedPlanRows.add(rows);
+      }
+
+      const row = document.createElement('div');
+      const modelName = document.createElement('span');
+      const status = document.createElement('div');
+      const history = document.createElement('div');
+      const strip = document.createElement('div');
+      const latency = document.createElement('span');
+
+      row.className = 'availability-row';
+      modelName.className = 'availability-row__name';
+      modelName.textContent = config.modelName;
+      status.className = 'availability-row__status';
+      history.className = 'availability-row__history';
+      strip.className = 'availability-strip';
+      strip.setAttribute('role', 'img');
+      strip.setAttribute('aria-label', `${config.modelName} 状态加载中`);
+      latency.className = 'availability-row__latency';
+      latency.textContent = '加载中';
+
+      history.append(strip, latency);
+      status.append(history);
+      row.append(modelName, status);
+      rows.append(row);
+      uptimeStatusRows.push({ ...config, modelLabel: config.modelName, strip, latency });
+    }
+
+    async function refreshTerraStatus() {
+      try {
+        const [statusPageResponse, heartbeatResponse] = await Promise.all([
+          fetch(`${uptimeKumaBaseUrl}/api/status-page/${uptimeKumaStatusPageSlug}`),
+          fetch(`${uptimeKumaBaseUrl}/api/status-page/heartbeat/${uptimeKumaStatusPageSlug}`),
+        ]);
+        if (!statusPageResponse.ok || !heartbeatResponse.ok) {
+          throw new Error('Uptime Kuma status request failed');
+        }
+
+        const [statusPage, heartbeatData] = await Promise.all([
+          statusPageResponse.json(),
+          heartbeatResponse.json(),
+        ]);
+        const monitors = statusPage.publicGroupList?.flatMap((group) => group.monitorList || []) || [];
+
+        for (const statusRow of uptimeStatusRows) {
+          const monitor = monitors.find((item) => item.name?.toLowerCase() === statusRow.monitorName.toLowerCase());
+          const heartbeats = monitor && heartbeatData.heartbeatList?.[String(monitor.id)];
+          const visibleHeartbeats = Array.isArray(heartbeats) ? heartbeats.slice(-48) : [];
+          if (visibleHeartbeats.length === 0) {
+            statusRow.strip.replaceChildren();
+            statusRow.latency.textContent = '未获取';
+            statusRow.strip.setAttribute('aria-label', `${statusRow.modelLabel} 状态未获取`);
+            continue;
+          }
+
+          statusRow.strip.replaceChildren();
+          for (let index = 0; index < 48; index += 1) {
+            const heartbeat = visibleHeartbeats[index - (48 - visibleHeartbeats.length)];
+            const segment = document.createElement('span');
+            segment.className = heartbeat
+              ? statusClasses[heartbeat.status] || 'availability-strip__pending'
+              : 'availability-strip__pending';
+            statusRow.strip.append(segment);
+          }
+
+          const latestHeartbeat = visibleHeartbeats.at(-1);
+          const statusLabel = statusLabels[latestHeartbeat.status] || '未知';
+          const ping = latestHeartbeat.ping;
+          statusRow.latency.textContent = Number.isFinite(ping) ? `${ping} ms` : statusLabel;
+          statusRow.strip.setAttribute('aria-label', `${statusRow.modelLabel} 当前${statusLabel}${Number.isFinite(ping) ? `，延迟 ${ping} ms` : ''}`);
+        }
+      } catch {
+        for (const statusRow of uptimeStatusRows) {
+          statusRow.strip.replaceChildren();
+          statusRow.latency.textContent = '未获取';
+          statusRow.strip.setAttribute('aria-label', `${statusRow.modelLabel} 状态未获取`);
+        }
+      }
+    }
+
+    if (uptimeStatusRows.length > 0) {
+      refreshTerraStatus();
+      window.setInterval(refreshTerraStatus, 60_000);
+    }
 
     const productNames = { codex: 'Codex', claude: 'Claude Code' };
     const productTabs = [...document.querySelectorAll('[data-product]')];
