@@ -443,8 +443,9 @@
       .topbar { height: 60px; }
       .topbar__inner, .page { width: min(100% - 28px, 1180px); }
       .page { padding-top: 42px; }
-      .intro { grid-template-columns: 1fr; gap: 23px; padding-bottom: 27px; }
+      .intro { grid-template-columns: 1fr; gap: 20px; padding-bottom: 27px; }
       h1 { font-size: 39px; }
+      .contact-card { width: 100%; min-width: 0; }
       .availability { justify-self: stretch; grid-template-columns: 1fr auto; align-items: center; }
       .availability::before { grid-column: 1 / -1; }
       .section { margin-top: 52px; }
@@ -495,7 +496,45 @@
     .button--primary:hover { background: #363834; }
     .button--text { background: transparent; color: var(--muted); }
     .button--text:hover { background: #f0f1ee; color: var(--text); }
-    .intro { border-bottom-color: var(--border); }
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 32px;
+      border-bottom-color: var(--border);
+    }
+    .contact-card {
+      min-width: 284px;
+      display: grid;
+      gap: 10px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+    }
+    .contact-card__title {
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .04em;
+    }
+    .contact-card__list { display: grid; gap: 7px; }
+    .contact-card__item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .contact-card__label { white-space: nowrap; }
+    .contact-card__value {
+      color: var(--text);
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: right;
+    }
     .intro::after { display: none; }
     .eyebrow { color: var(--accent2); }
     h1 { color: var(--text); }
@@ -724,6 +763,19 @@
         <div>
           <h1 id="pricing-title">云析AI</h1>
         </div>
+        <aside class="contact-card" aria-label="联系方式">
+          <div class="contact-card__title">联系方式</div>
+          <div class="contact-card__list">
+            <div class="contact-card__item">
+              <span class="contact-card__label">客服 QQ</span>
+              <span class="contact-card__value">1003862396</span>
+            </div>
+            <div class="contact-card__item">
+              <span class="contact-card__label">QQ 群</span>
+              <span class="contact-card__value">xxxxxx</span>
+            </div>
+          </div>
+        </aside>
       </div>
 
       <div class="panel">
