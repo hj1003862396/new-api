@@ -173,7 +173,7 @@
     .segment { min-height: 34px; padding: 6px 14px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 13px; font-weight: 650; cursor: pointer; transition: background-color 160ms ease, color 160ms ease; }
     .segment[aria-selected="true"] { background: var(--accent1); color: #fff; box-shadow: none; }
     .install-context { color: var(--muted); font-size: 13px; text-align: right; }
-    .method-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+    .method-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
     .method {
       width: 100%; min-height: 152px; display: flex; flex-direction: column; align-items: flex-start;
       gap: 0; padding: 17px; border: 1px solid var(--border); border-radius: 13px;
@@ -228,11 +228,12 @@
     .guide-steps li::before { content: counter(guide); position: absolute; left: 0; top: 0; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--accent1); color: #fff; font-size: 11px; font-weight: 700; }
     .command-wrap { margin-top: 20px; }
     .command-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; color: var(--muted); font-size: 12px; }
-    .command { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: #0a0a0d; color: #e6e6ea; }
-    .command code { overflow-x: auto; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; white-space: nowrap; }
+    .command { min-height: 56px; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: #0a0a0d; color: #e6e6ea; }
+    .command code { min-width: 0; flex: 1; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .command .button { flex: 0 0 auto; }
     .command .button { border-color: var(--border-strong); background: rgba(255,255,255,0.06); color: #fff; }
-    .modal-video { margin-top: 20px; aspect-ratio: 16 / 9; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 12px; background: rgba(255,255,255,0.02); color: var(--muted); text-align: center; }
-    .modal-video .icon { width: 28px; height: 28px; margin: 0 auto 8px; }
+    .modal-video { margin-top: 20px; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; background: #0a0a0d; }
+    .modal-video video { display: block; width: 100%; height: 100%; background: #0a0a0d; }
     .download-flow { display: grid; gap: 0; }
     .download-step { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--border); }
     .download-step:first-child { padding-top: 0; }
@@ -244,7 +245,7 @@
     .download-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 12px; }
     .download-link { min-width: 132px; }
     .download-link .icon { width: 16px; height: 16px; }
-    .guide-steps[hidden], .download-flow[hidden], .command-wrap[hidden] { display: none !important; }
+    .guide-steps[hidden], .download-flow[hidden], .command-wrap[hidden], .modal-video[hidden] { display: none !important; }
     .modal__note { margin-top: 16px; padding: 11px 14px; border-left: 3px solid var(--claude2); background: rgba(255,255,255,0.05); color: #c8ccd6; font-size: 12px; border-radius: 0 8px 8px 0; }
 
     @media (max-width: 960px) {
@@ -784,7 +785,6 @@
         <nav class="topnav" aria-label="主页导航">
           <a href="#pricing">价格</a>
           <a href="#install">安装方式</a>
-          <a href="#recharge">充值教程</a>
         </nav>
         <a class="button button--primary button--console" href="#pricing">
           <svg class="icon" aria-hidden="true"><use href="#i-terminal"></use></svg><span>进入控制台</span>
@@ -848,40 +848,14 @@
 
     <section class="section" id="install" aria-labelledby="install-title">
       <div class="section__heading">
-        <div><h2 id="install-title">安装方式</h2><p>选择你使用的工具，查看对应的配置步骤与命令。</p></div>
+        <div><h2 id="install-title">安装方式</h2><p>下载对应客户端，或直接用 curl 调用 API。</p></div>
       </div>
-      <div class="panel install-panel" data-install-panel data-active-product="codex">
-        <div class="install-toolbar">
-          <div class="segmented" role="tablist" aria-label="选择产品">
-            <button id="tab-codex" class="segment" type="button" role="tab" aria-controls="install-methods" aria-selected="true" tabindex="0" data-product="codex">Codex</button>
-            <button id="tab-claude" class="segment" type="button" role="tab" aria-controls="install-methods" aria-selected="false" tabindex="-1" data-product="claude">Claude Code</button>
-          </div>
-          <p class="install-context" data-install-context>正在查看 Codex 安装教程</p>
+      <div class="panel install-panel">
+        <div class="method-list" id="install-methods">
+          <button class="method" type="button" data-product="codex" data-method="software"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg></span><span class="method__name">Codex 软件</span><span class="method__description">下载 Codex，配置 API Key</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
+          <button class="method" type="button" data-product="claude" data-method="software"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg></span><span class="method__name">Claude Code 软件</span><span class="method__description">下载 Claude Code，配置 API Key</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
+          <button class="method" type="button" data-product="codex" data-method="curl"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg></span><span class="method__name">curl 调用</span><span class="method__description">直接验证 API 地址与密钥是否可用</span><span class="method__action">查看示例<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
         </div>
-        <div class="method-list" id="install-methods" role="tabpanel" aria-labelledby="tab-codex" tabindex="0">
-          <button class="method" type="button" data-method="software"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg></span><span class="method__name">软件</span><span class="method__description">下载 Codex，配置 API Key</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
-          <button class="method" type="button" data-method="terminal"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-terminal"></use></svg></span><span class="method__name">终端</span><span class="method__description">通过系统终端快速安装 Codex</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
-          <button class="method" type="button" data-method="cursor"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-cursor"></use></svg></span><span class="method__name">Cursor</span><span class="method__description">在编辑器中配置自定义 API 服务</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
-          <button class="method" type="button" data-method="cli"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg></span><span class="method__name">CLI</span><span class="method__description">配置命令行环境并启动 Codex</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
-          <button class="method" type="button" data-method="curl"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg></span><span class="method__name">CURL</span><span class="method__description">直接验证 API 地址与密钥是否可用</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="recharge" aria-labelledby="recharge-title">
-      <div class="section__heading"><div><h2 id="recharge-title">充值教程</h2><p>首次使用建议先观看完整流程，约 2 分钟即可完成。</p></div></div>
-      <div class="panel tutorial">
-        <div class="tutorial__content">
-          <span class="tutorial__label"><svg class="icon" aria-hidden="true"><use href="#i-wallet"></use></svg>账户充值</span>
-          <h3>从选择金额到余额到账</h3>
-          <p>进入控制台钱包，选择充值金额并完成支付。到账后即可创建 API 密钥开始使用。</p>
-          <div class="steps"><span class="step"><span class="step__number">1</span>打开钱包</span><span class="step"><span class="step__number">2</span>选择金额</span><span class="step"><span class="step__number">3</span>确认到账</span></div>
-        </div>
-        <button class="video-preview" type="button" data-recharge-guide aria-label="播放充值视频教程">
-          <span class="video-preview__screen"><span class="video-preview__sidebar"></span><span class="video-preview__lines"><span class="video-preview__line"></span><span class="video-preview__line"></span><span class="video-preview__line"></span></span></span>
-          <span class="play"><svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg></span>
-          <span class="video-preview__caption"><span>充值操作演示</span><span>02:10</span></span>
-        </button>
       </div>
     </section>
 
@@ -900,7 +874,7 @@
         <ol class="guide-steps" data-guide-steps><li>登录控制台并创建一个 API 密钥。</li><li>按当前平台安装客户端。</li><li>复制配置命令并重新打开终端。</li></ol>
         <div class="download-flow" data-download-flow hidden></div>
         <div class="command-wrap"><div class="command-label"><span>配置命令</span><span data-copy-status aria-live="polite"></span></div><div class="command"><code data-command>npm install -g @openai/codex</code><button class="button button--small" type="button" data-copy-command><svg class="icon" aria-hidden="true"><use href="#i-copy"></use></svg><span>复制</span></button></div></div>
-        <div class="modal-video" data-modal-video><div><svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg><strong data-modal-video-title>视频教程</strong><p data-modal-video-copy>视频地址配置后将在这里播放</p></div></div>
+        <div class="modal-video" data-modal-video><video data-modal-video-player controls playsinline preload="metadata"></video></div>
         <p class="modal__note" data-modal-note>安装完成后，请在控制台复制你的专属 API 地址与密钥。</p>
       </div>
     </article>
@@ -934,32 +908,26 @@
             }
           ],
           command: '',
-          videoTitle: 'Codex 软件安装视频教程',
-          videoCopy: '跟随视频完成软件下载、CC Switch 安装与 Key 配置',
+          videoUrl: 'https://yxaii.oss-cn-beijing.aliyuncs.com/video/codex.mp4',
           note: 'Key 仅用于个人设备配置，请勿提交到代码仓库或分享给其他人。'
-        },
-        terminal: {
-          title: 'Codex · 终端',
-          steps: ['确认已安装 Node.js 20 或更高版本。', '在系统终端全局安装 Codex。', '安装完成后运行 codex，并按提示配置 API 信息。'],
-          command: 'npm install -g @openai/codex && codex',
-          note: 'Windows 用户可在 PowerShell 或 WSL 中执行；请在同一终端环境内完成安装与运行。'
-        },
-        cursor: {
-          title: 'Codex · Cursor',
-          steps: ['在 Cursor 中打开项目目录。', '打开集成终端并安装 Codex CLI。', '配置 API 地址和密钥后，在终端运行 codex。'],
-          command: 'npm install -g @openai/codex && codex',
-          note: 'Codex 在 Cursor 的集成终端中运行，配置与普通 CLI 保持一致。'
-        },
-        cli: {
-          title: 'Codex · CLI',
-          steps: ['打开系统终端。', '全局安装 Codex CLI。', '进入项目目录并运行 codex 开始使用。'],
-          command: 'npm install -g @openai/codex && codex',
-          note: '如果出现权限错误，请使用 Node 版本管理器安装 Node.js 后重试。'
         },
         curl: {
           title: 'Codex · curl',
-          steps: ['在控制台创建 API 密钥并确认 API 服务支持 HTTPS。', '将 YOUR_API_HOST 和 YOUR_API_KEY 替换为控制台提供的信息。', '发送请求并检查返回的模型列表。'],
-          command: 'curl https://YOUR_API_HOST/v1/models -H "Authorization: Bearer YOUR_API_KEY"',
+          video: false,
+          steps: ['将 sk-xxx 替换为控制台创建的 API 密钥。', '在终端中发送聊天请求。', '检查返回的 JSON 响应。'],
+          command: `curl --location --request POST 'https://yxai.pro/v1/chat/completions' \\
+--header 'Authorization: Bearer sk-xxx' \\
+--header 'Content-Type: application/json' \\
+--data-raw '{
+    "model": "gpt-5.6-sol",
+    "messages": [
+        {
+            "role": "user",
+            "content": "say 1"
+        }
+    ],
+    "stream": false
+}'`,
           note: '仅通过 HTTPS 发送真实 API 密钥；不要把密钥提交到代码仓库或分享给其他人。'
         }
       },
@@ -990,43 +958,29 @@
             }
           ],
           command: '',
-          videoTitle: 'Claude Code 软件安装视频教程',
-          videoCopy: '跟随视频完成客户端下载、CC Switch 安装与 Key 配置',
+          videoUrl: 'https://yxaii.oss-cn-beijing.aliyuncs.com/video/claude.mp4',
           note: '配置 API Key 后支持公网访问，实际可访问范围以客户端权限和服务策略为准。'
-        },
-        terminal: {
-          title: 'Claude Code · 终端',
-          steps: ['确认已安装 Node.js 18 或更高版本。', '在系统终端全局安装 Claude Code。', '配置控制台中的 API 地址和 Key 后启动 claude。'],
-          command: 'npm install -g @anthropic-ai/claude-code && claude',
-          note: 'Windows 用户可在 PowerShell 或 WSL 中执行；请在同一终端环境内完成安装与运行。'
-        },
-        cursor: {
-          title: 'Claude Code · Cursor',
-          steps: ['用 Cursor 打开需要处理的代码仓库。', '在集成终端安装 Claude Code。', '配置 API 后从终端运行 claude。'],
-          command: 'npm install -g @anthropic-ai/claude-code && claude',
-          note: 'Claude Code 会读取当前打开的项目目录，请先确认终端所在路径。'
-        },
-        cli: {
-          title: 'Claude Code · CLI',
-          steps: ['打开终端并确认 Node.js 可用。', '全局安装 Claude Code。', '进入项目目录并启动 claude。'],
-          command: 'npm install -g @anthropic-ai/claude-code && claude',
-          note: 'API 地址和密钥应使用控制台提供的专属配置，避免使用过期信息。'
         },
         curl: {
           title: 'Claude Code · curl',
-          steps: ['在控制台创建 API 密钥并确认 API 服务支持 HTTPS。', '替换请求中的 YOUR_API_HOST 与 YOUR_API_KEY。', '发送完整消息请求并检查 JSON 响应。'],
-          command: `curl -X POST https://YOUR_API_HOST/v1/messages -H "x-api-key: YOUR_API_KEY" -H "anthropic-version: 2023-06-01" -H "Content-Type: application/json" -d '{"model":"claude-sonnet-4-6","max_tokens":128,"messages":[{"role":"user","content":"Hello"}]}'`,
-          note: '仅通过 HTTPS 发送真实 API 密钥；模型名称请以完整价格页当前可用列表为准。'
+          video: false,
+          steps: ['将 sk-xxx 替换为控制台创建的 API 密钥。', '在终端中发送聊天请求。', '检查返回的 JSON 响应。'],
+          command: `curl --location --request POST 'https://yxai.pro/v1/chat/completions' \\
+--header 'Authorization: Bearer sk-xxx' \\
+--header 'Content-Type: application/json' \\
+--data-raw '{
+    "model": "gpt-5.6-sol",
+    "messages": [
+        {
+            "role": "user",
+            "content": "say 1"
+        }
+    ],
+    "stream": false
+}'`,
+          note: '仅通过 HTTPS 发送真实 API 密钥；不要把密钥提交到代码仓库或分享给其他人。'
         }
       }
-    };
-
-    const rechargeContent = {
-      title: '充值教程 · 完整流程',
-      eyebrow: '账户充值',
-      steps: ['登录控制台后进入"钱包"。', '选择充值金额并完成支付。', '返回钱包确认余额到账，然后创建 API 密钥。'],
-      command: '',
-      note: '当前页面预留了视频位置，配置真实教程地址后即可直接播放。'
     };
 
     const uptimeMonitorConfigs = [
@@ -1141,28 +1095,7 @@
       window.setInterval(refreshTerraStatus, 60_000);
     }
 
-    const installationMethods = {
-      codex: [
-        { id: 'software', name: '软件', description: '下载 Codex，配置 API Key', icon: 'box' },
-        { id: 'terminal', name: '终端', description: '通过系统终端快速安装 Codex', icon: 'terminal' },
-        { id: 'cursor', name: 'Cursor', description: '在编辑器中配置自定义 API 服务', icon: 'cursor' },
-        { id: 'cli', name: 'CLI', description: '配置命令行环境并启动 Codex', icon: 'code' },
-        { id: 'curl', name: 'curl', description: '直接验证 API 地址与密钥是否可用', icon: 'globe' }
-      ],
-      claude: [
-        { id: 'software', name: '软件', description: '下载 Claude，配置 API Key', icon: 'box' },
-        { id: 'terminal', name: '终端', description: '通过系统终端快速安装 Claude Code', icon: 'terminal' },
-        { id: 'cursor', name: 'Cursor', description: '在编辑器中配置自定义 API 服务', icon: 'cursor' },
-        { id: 'cli', name: 'CLI', description: '配置命令行环境并启动 Claude Code', icon: 'code' },
-        { id: 'curl', name: 'curl', description: '直接验证 API 地址与密钥是否可用', icon: 'globe' }
-      ]
-    };
-
-    const productNames = { codex: 'Codex', claude: 'Claude Code' };
-    const productTabs = [...document.querySelectorAll('[data-product]')];
-    const installPanel = document.querySelector('[data-install-panel]');
     const methodPanel = document.querySelector('#install-methods');
-    const installContext = document.querySelector('[data-install-context]');
     const modal = document.querySelector('[data-modal]');
     const modalTitle = document.querySelector('[data-modal-title]');
     const modalEyebrow = document.querySelector('[data-modal-eyebrow]');
@@ -1172,54 +1105,12 @@
     const commandOutput = document.querySelector('[data-command]');
     const copyButton = document.querySelector('[data-copy-command]');
     const copyStatus = document.querySelector('[data-copy-status]');
-    const modalVideoTitle = document.querySelector('[data-modal-video-title]');
-    const modalVideoCopy = document.querySelector('[data-modal-video-copy]');
+    const modalVideo = document.querySelector('[data-modal-video]');
+    const modalVideoPlayer = document.querySelector('[data-modal-video-player]');
     const modalNote = document.querySelector('[data-modal-note]');
     const pageHeader = document.querySelector('.topbar');
     const pageMain = document.querySelector('main');
-    let activeProduct = 'codex';
     let lastTrigger = null;
-
-    function renderMethodList(product) {
-      methodPanel.replaceChildren();
-      installationMethods[product].forEach((method) => {
-        const button = document.createElement('button');
-        button.className = 'method';
-        button.type = 'button';
-        button.dataset.method = method.id;
-
-        const icon = document.createElement('span');
-        icon.className = 'method__icon';
-        icon.innerHTML = `<svg class="icon" aria-hidden="true"><use href="#i-${method.icon}"></use></svg>`;
-
-        const name = document.createElement('span');
-        name.className = 'method__name';
-        name.textContent = method.name;
-
-        const description = document.createElement('span');
-        description.className = 'method__description';
-        description.textContent = method.description;
-
-        const action = document.createElement('span');
-        action.className = 'method__action';
-        action.innerHTML = '查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>';
-        button.append(icon, name, description, action);
-        methodPanel.append(button);
-      });
-    }
-
-    function selectProduct(product) {
-      activeProduct = product;
-      productTabs.forEach((tab) => {
-        const selected = tab.dataset.product === product;
-        tab.setAttribute('aria-selected', String(selected));
-        tab.tabIndex = selected ? 0 : -1;
-      });
-      installPanel.dataset.activeProduct = product;
-      methodPanel.setAttribute('aria-labelledby', `tab-${product}`);
-      installContext.textContent = `正在查看 ${productNames[product]} 安装教程`;
-      renderMethodList(product);
-    }
 
     function renderSteps(steps) {
       guideSteps.replaceChildren();
@@ -1283,8 +1174,10 @@
       commandOutput.textContent = content.command || '';
       copyStatus.textContent = '';
       copyButton.querySelector('span').textContent = '复制';
-      modalVideoTitle.textContent = content.videoTitle || '视频教程';
-      modalVideoCopy.textContent = content.videoCopy || '视频地址配置后将在这里播放';
+      modalVideo.hidden = !content.videoUrl;
+      modalVideoPlayer.pause();
+      modalVideoPlayer.src = content.videoUrl || '';
+      modalVideoPlayer.load();
       modalNote.textContent = content.note;
       modal.hidden = false;
       document.body.classList.add('modal-open');
@@ -1298,14 +1191,10 @@
       renderModal(installationContent[product][method]);
     }
 
-    function openRechargeGuide(trigger) {
-      lastTrigger = trigger;
-      renderModal(rechargeContent);
-    }
-
     function closeModal() {
       if (modal.hidden) return;
       modal.hidden = true;
+      modalVideoPlayer.pause();
       document.body.classList.remove('modal-open');
       pageHeader.inert = false;
       pageMain.inert = false;
@@ -1344,28 +1233,11 @@
       }
     }
 
-    productTabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => selectProduct(tab.dataset.product));
-      tab.addEventListener('keydown', (event) => {
-        const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
-        if (!keys.includes(event.key)) return;
-        event.preventDefault();
-        let nextIndex = index;
-        if (event.key === 'ArrowLeft') nextIndex = (index - 1 + productTabs.length) % productTabs.length;
-        if (event.key === 'ArrowRight') nextIndex = (index + 1) % productTabs.length;
-        if (event.key === 'Home') nextIndex = 0;
-        if (event.key === 'End') nextIndex = productTabs.length - 1;
-        const nextTab = productTabs[nextIndex];
-        selectProduct(nextTab.dataset.product);
-        nextTab.focus();
-      });
-    });
     methodPanel.addEventListener('click', (event) => {
       const button = event.target.closest('[data-method]');
       if (!button) return;
-      openInstallGuide(activeProduct, button.dataset.method, button);
+      openInstallGuide(button.dataset.product, button.dataset.method, button);
     });
-    document.querySelector('[data-recharge-guide]').addEventListener('click', (event) => openRechargeGuide(event.currentTarget));
     document.querySelector('[data-modal-close]').addEventListener('click', closeModal);
     document.querySelector('[data-modal-backdrop]').addEventListener('click', closeModal);
     copyButton.addEventListener('click', copyCommand);
