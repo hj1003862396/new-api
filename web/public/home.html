@@ -372,7 +372,7 @@
     .button--text { color: var(--muted); }
     .button--text:hover { background: #222b1f; color: var(--accent2); }
     .page { padding-top: 62px; padding-bottom: 96px; }
-    .intro { position: relative; display: block; margin-bottom: 0; padding: 0 0 34px; border-bottom: 1px solid var(--border); }
+    .intro { position: relative; display: block; margin-bottom: 0; padding: 0 0 21px; border-bottom: 1px solid var(--border); }
     .intro::after { content: ""; position: absolute; bottom: -1px; left: 0; width: 128px; height: 3px; background: var(--accent2); }
     .eyebrow { margin-bottom: 15px; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--accent2); font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 11px; letter-spacing: .12em; }
     .eyebrow::before { content: ">_"; font-size: 12px; }
@@ -553,6 +553,18 @@
       font-weight: 700;
       text-align: right;
     }
+    .models-link {
+      display: flex;
+      width: fit-content;
+      align-items: center;
+      gap: 4px;
+      margin: 0 0 10px auto;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .models-link:hover { color: var(--text); text-decoration: underline; }
+    .models-link .icon { width: 13px; height: 13px; }
     .intro::after { display: none; }
     .eyebrow { color: var(--accent2); }
     h1 { color: var(--text); }
@@ -793,10 +805,17 @@
               <span class="contact-card__label">客服 QQ</span>
               <span class="contact-card__value">1003862396</span>
             </div>
+            <div class="contact-card__item">
+              <span class="contact-card__label">备用 QQ</span>
+              <span class="contact-card__value">515199667</span>
+            </div>
           </div>
         </aside>
       </div>
 
+      <a class="models-link" href="https://yxai.pro/pricing" target="_blank" rel="noopener noreferrer">
+        更多模型<svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+      </a>
       <div class="panel">
         <table class="pricing-table">
           <colgroup><col style="width: 20%"><col style="width: 10%"><col style="width: 11%"><col style="width: 39%"><col style="width: 20%"></colgroup>
@@ -818,7 +837,7 @@
               <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">claude-opus-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">214 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">claude-sonnet-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">168 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__degraded"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">241 ms</span></div></div></div></div></div></td>
             </tr>
             <tr>
-              <td data-label="套餐"><div class="plan"><span class="plan__icon plan__icon--claude"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-claude"></use></svg></span><span><span class="plan__name">Claude Code MAX</span><span class="plan__type">稳定，高速，claude-sonnet-5每次调用约0.005元</span></span></div></td>
+              <td data-label="套餐"><div class="plan"><span class="plan__icon plan__icon--claude"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-claude"></use></svg></span><span><span class="plan__name">Claude Code Max</span><span class="plan__type">稳定，高速，claude-sonnet-5每次调用约0.005元</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">1x<small>倍率</small></span></td>
               <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">claude-opus-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">189 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">claude-sonnet-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__degraded"></span><span class="availability-strip__degraded"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">329 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__incident"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">—</span></div></div></div></div></div></td>
             </tr>
@@ -869,7 +888,7 @@
     <aside class="referral" aria-labelledby="referral-title">
       <div class="referral__icon"><svg class="icon" aria-hidden="true"><use href="#i-gift"></use></svg></div>
       <div><h2 id="referral-title">邀请好友，持续获得 10% 提成</h2><p>在设置中复制邀请链接给新用户，新用户每次充值都会给你 <span class="commission">10% 提成</span>，在日志中筛选系统可查看详情。</p></div>
-      <a class="button" href="#pricing">前往设置<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      <a class="button" href="https://yxai.pro/wallet">前往设置<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
     </aside>
   </main>
 
@@ -1020,9 +1039,9 @@
       { planName: 'Claude Code', modelName: 'claude-sonnet-5', monitorName: 'cc claude-sonnet-5' },
       { planName: 'Claude Code', modelName: 'claude-opus-5', monitorName: 'cc claude-opus-5' },
       { planName: 'Claude Code', modelName: 'claude-haiku-4-5', monitorName: 'cc claude-haiku-4-5' },
-      { planName: 'Claude Code MAX', modelName: 'claude-sonnet-5', monitorName: 'ccmax claude-sonnet-5' },
-      { planName: 'Claude Code MAX', modelName: 'claude-opus-5', monitorName: 'ccmax claude-opus-5' },
-      { planName: 'Claude Code MAX', modelName: 'claude-haiku-4-5', monitorName: 'ccmax claude-haiku-4-5' },
+      { planName: 'Claude Code Max', modelName: 'claude-sonnet-5', monitorName: 'ccmax claude-sonnet-5' },
+      { planName: 'Claude Code Max', modelName: 'claude-opus-5', monitorName: 'ccmax claude-opus-5' },
+      { planName: 'Claude Code Max', modelName: 'claude-haiku-4-5', monitorName: 'ccmax claude-haiku-4-5' },
     ];
     const statusLabels = { 0: '异常', 1: '正常', 2: '检测中', 3: '维护中' };
     const statusClasses = { 0: 'availability-strip__incident', 1: 'availability-strip__up', 2: 'availability-strip__pending', 3: 'availability-strip__degraded' };
