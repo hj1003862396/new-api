@@ -233,6 +233,18 @@
     .command .button { border-color: var(--border-strong); background: rgba(255,255,255,0.06); color: #fff; }
     .modal-video { margin-top: 20px; aspect-ratio: 16 / 9; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 12px; background: rgba(255,255,255,0.02); color: var(--muted); text-align: center; }
     .modal-video .icon { width: 28px; height: 28px; margin: 0 auto 8px; }
+    .download-flow { display: grid; gap: 0; }
+    .download-step { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+    .download-step:first-child { padding-top: 0; }
+    .download-step:last-child { padding-bottom: 2px; border-bottom: 0; }
+    .download-step__number { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid #afd4b7; border-radius: 4px; background: #f0f8f1; color: var(--success); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; font-weight: 750; }
+    .download-step__content { min-width: 0; }
+    .download-step__title { color: var(--text); font-size: 14px; font-weight: 700; }
+    .download-step__description { margin-top: 4px; color: var(--muted); font-size: 12px; }
+    .download-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 12px; }
+    .download-link { min-width: 132px; }
+    .download-link .icon { width: 16px; height: 16px; }
+    .guide-steps[hidden], .download-flow[hidden], .command-wrap[hidden] { display: none !important; }
     .modal__note { margin-top: 16px; padding: 11px 14px; border-left: 3px solid var(--claude2); background: rgba(255,255,255,0.05); color: #c8ccd6; font-size: 12px; border-radius: 0 8px 8px 0; }
 
     @media (max-width: 960px) {
@@ -292,6 +304,8 @@
       .modal { padding: 12px; }
       .modal__panel { max-height: calc(100vh - 24px); }
       .modal__header, .modal__body { padding-right: 18px; padding-left: 18px; }
+      .download-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .download-link { min-width: 0; padding-right: 10px; padding-left: 10px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -789,22 +803,22 @@
           <thead><tr><th>套餐</th><th>价格倍率</th><th>模型可用性</th></tr></thead>
           <tbody>
             <tr>
-              <td data-label="套餐"><div class="plan"><span class="plan__icon"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-openai"></use></svg></span><span><span class="plan__name">Codex Plus</span><span class="plan__type">慢速，便宜，每次调用约0.0005元</span></span></div></td>
+              <td data-label="套餐"><div class="plan"><span class="plan__icon"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-openai"></use></svg></span><span><span class="plan__name">Codex Plus</span><span class="plan__type">慢速，便宜，terra每次调用约0.0005元</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">0.1x<small>倍率</small></span></td>
               <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">gpt-5.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">148 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">gpt-5.6-codex</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">172 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">96 ms</span></div></div></div></div></div></td>
             </tr>
             <tr>
-              <td data-label="套餐"><div class="plan"><span class="plan__icon"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-openai"></use></svg></span><span><span class="plan__name">Codex Pro</span><span class="plan__type">稳定，高速，每次调用约0.001元</span></span></div></td>
+              <td data-label="套餐"><div class="plan"><span class="plan__icon"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-openai"></use></svg></span><span><span class="plan__name">Codex Pro</span><span class="plan__type">稳定，高速，terra每次调用约0.001元</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">0.2x<small>倍率</small></span></td>
               <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">gpt-5.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">121 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">gpt-5.6-codex</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__degraded"></span><span class="availability-strip__degraded"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">286 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">103 ms</span></div></div></div></div></div></td>
             </tr>
             <tr>
-              <td data-label="套餐"><div class="plan"><span class="plan__icon plan__icon--claude"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-claude"></use></svg></span><span><span class="plan__name">Claude Code</span><span class="plan__type">慢速，便宜，每次调用约0.001元</span></span></div></td>
+              <td data-label="套餐"><div class="plan"><span class="plan__icon plan__icon--claude"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-claude"></use></svg></span><span><span class="plan__name">Claude Code</span><span class="plan__type">慢速，便宜，claude-sonnet-5每次调用约0.001元</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">0.2x<small>倍率</small></span></td>
               <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">claude-opus-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">214 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">claude-sonnet-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">168 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__degraded"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">241 ms</span></div></div></div></div></div></td>
             </tr>
             <tr>
-              <td data-label="套餐"><div class="plan"><span class="plan__icon plan__icon--claude"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-claude"></use></svg></span><span><span class="plan__name">Claude Code MAX</span><span class="plan__type">稳定，高速，每次调用约0.005元</span></span></div></td>
+              <td data-label="套餐"><div class="plan"><span class="plan__icon plan__icon--claude"><svg class="plan__provider-logo" aria-hidden="true"><use href="#i-claude"></use></svg></span><span><span class="plan__name">Claude Code MAX</span><span class="plan__type">稳定，高速，claude-sonnet-5每次调用约0.005元</span></span></div></td>
               <td data-label="价格倍率"><span class="rate-pill">1x<small>倍率</small></span></td>
               <td data-label="模型可用性"><div class="model-availability"><div class="model-availability__rows"><div class="availability-row"><span class="availability-row__name">claude-opus-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">189 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">claude-sonnet-4.6</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__degraded"></span><span class="availability-strip__degraded"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">329 ms</span></div></div></div><div class="availability-row"><span class="availability-row__name">luna</span><div class="availability-row__status"><div class="availability-row__history"><div class="availability-strip" role="img" aria-label="模型可用性历史"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span class="availability-strip__incident"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><span class="availability-row__latency">—</span></div></div></div></div></div></td>
             </tr>
@@ -826,11 +840,11 @@
           <p class="install-context" data-install-context>正在查看 Codex 安装教程</p>
         </div>
         <div class="method-list" id="install-methods" role="tabpanel" aria-labelledby="tab-codex" tabindex="0">
-          <button class="method" type="button" data-method="macos"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-apple"></use></svg></span><span class="method__name">macOS</span><span class="method__description">适用于 Apple Silicon 与 Intel Mac</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
-          <button class="method" type="button" data-method="windows"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-windows"></use></svg></span><span class="method__name">Windows</span><span class="method__description">通过 PowerShell 或 WSL 完成配置</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
+          <button class="method" type="button" data-method="software"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg></span><span class="method__name">软件</span><span class="method__description">下载 Codex，配置 API Key</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
+          <button class="method" type="button" data-method="terminal"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-terminal"></use></svg></span><span class="method__name">终端</span><span class="method__description">通过系统终端快速安装 Codex</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
           <button class="method" type="button" data-method="cursor"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-cursor"></use></svg></span><span class="method__name">Cursor</span><span class="method__description">在编辑器中配置自定义 API 服务</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
-          <button class="method" type="button" data-method="cli"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg></span><span class="method__name">CLI</span><span class="method__description">使用终端安装并设置环境变量</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
-          <button class="method" type="button" data-method="curl"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg></span><span class="method__name">curl</span><span class="method__description">直接验证 API 地址与密钥是否可用</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
+          <button class="method" type="button" data-method="cli"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg></span><span class="method__name">CLI</span><span class="method__description">配置命令行环境并启动 Codex</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
+          <button class="method" type="button" data-method="curl"><span class="method__icon"><svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg></span><span class="method__name">CURL</span><span class="method__description">直接验证 API 地址与密钥是否可用</span><span class="method__action">查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span></button>
         </div>
       </div>
     </section>
@@ -865,8 +879,9 @@
       <header class="modal__header"><div><p class="modal__eyebrow" data-modal-eyebrow>安装教程</p><h2 id="modal-title" data-modal-title>Codex · macOS</h2></div><button class="button button--icon button--text" type="button" data-modal-close aria-label="关闭教程"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></header>
       <div class="modal__body">
         <ol class="guide-steps" data-guide-steps><li>登录控制台并创建一个 API 密钥。</li><li>按当前平台安装客户端。</li><li>复制配置命令并重新打开终端。</li></ol>
+        <div class="download-flow" data-download-flow hidden></div>
         <div class="command-wrap"><div class="command-label"><span>配置命令</span><span data-copy-status aria-live="polite"></span></div><div class="command"><code data-command>npm install -g @openai/codex</code><button class="button button--small" type="button" data-copy-command><svg class="icon" aria-hidden="true"><use href="#i-copy"></use></svg><span>复制</span></button></div></div>
-        <div class="modal-video" data-modal-video><div><svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg><strong>视频教程</strong><p>视频地址配置后将在这里播放</p></div></div>
+        <div class="modal-video" data-modal-video><div><svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg><strong data-modal-video-title>视频教程</strong><p data-modal-video-copy>视频地址配置后将在这里播放</p></div></div>
         <p class="modal__note" data-modal-note>安装完成后，请在控制台复制你的专属 API 地址与密钥。</p>
       </div>
     </article>
@@ -874,17 +889,41 @@
   <script>
     const installationContent = {
       codex: {
-        macos: {
-          title: 'Codex · macOS',
-          steps: ['确认已安装 Node.js 20 或更高版本。', '在终端安装 Codex CLI。', '从控制台复制 API 地址和密钥，按提示完成配置。'],
-          command: 'npm install -g @openai/codex',
-          note: 'Apple Silicon 与 Intel Mac 使用相同命令。首次运行 codex 时按提示完成授权。'
+        software: {
+          title: 'Codex · 软件安装',
+          eyebrow: '软件',
+          downloads: [
+            {
+              title: '下载 Codex 软件',
+              description: '选择对应的系统版本，直接下载官方 Codex 客户端。',
+              actions: [
+                { label: 'Mac 版', icon: 'apple', href: 'https://yxaii.oss-cn-beijing.aliyuncs.com/download/Codex-MAC.dmg' },
+                { label: 'Windows 版', icon: 'windows', href: 'https://yxaii.oss-cn-beijing.aliyuncs.com/download/ChatGPT-WIN.exe' }
+              ]
+            },
+            {
+              title: '下载 CC Switch',
+              description: '安装 CC Switch，用于管理和切换 Codex 的 API 配置。',
+              actions: [
+                { label: 'Mac 版', icon: 'apple', href: 'https://yxaii.oss-cn-beijing.aliyuncs.com/download/CC-Switch-MAC.dmg' },
+                { label: 'Windows 版', icon: 'windows', href: 'https://yxaii.oss-cn-beijing.aliyuncs.com/download/CC-Switch-WIN.msi' }
+              ]
+            },
+            {
+              title: '配置 Key',
+              description: '打开 CC Switch，新增 Codex 配置，填入控制台提供的 API 地址和 Key，然后设为当前配置。'
+            }
+          ],
+          command: '',
+          videoTitle: 'Codex 软件安装视频教程',
+          videoCopy: '跟随视频完成软件下载、CC Switch 安装与 Key 配置',
+          note: 'Key 仅用于个人设备配置，请勿提交到代码仓库或分享给其他人。'
         },
-        windows: {
-          title: 'Codex · Windows',
-          steps: ['以管理员身份打开 PowerShell，运行下方命令安装 WSL，然后重启 Windows。', '重启后打开 WSL 终端并安装 Node.js 20 或更高版本。', '在 WSL 中运行"npm install -g @openai/codex"，再配置控制台中的 API 信息。'],
-          command: 'wsl --install',
-          note: 'WSL 安装和 Codex 安装需要分两阶段完成；请勿在重启前连续执行 npm 命令。'
+        terminal: {
+          title: 'Codex · 终端',
+          steps: ['确认已安装 Node.js 20 或更高版本。', '在系统终端全局安装 Codex。', '安装完成后运行 codex，并按提示配置 API 信息。'],
+          command: 'npm install -g @openai/codex && codex',
+          note: 'Windows 用户可在 PowerShell 或 WSL 中执行；请在同一终端环境内完成安装与运行。'
         },
         cursor: {
           title: 'Codex · Cursor',
@@ -906,17 +945,41 @@
         }
       },
       claude: {
-        macos: {
-          title: 'Claude Code · macOS',
-          steps: ['确认已安装 Node.js 18 或更高版本。', '通过 npm 安装 Claude Code。', '配置控制台中的 API 地址与密钥后启动客户端。'],
-          command: 'npm install -g @anthropic-ai/claude-code',
-          note: '安装完成后运行 claude，首次启动会引导你完成基础配置。'
+        software: {
+          title: 'Claude Code · 软件安装',
+          eyebrow: '软件',
+          downloads: [
+            {
+              title: '下载 Claude 客户端',
+              description: '打开官方下载页，选择对应的 Mac 或 Windows 版本。',
+              actions: [
+                { label: 'Mac 版', icon: 'apple', href: 'https://yxaii.oss-cn-beijing.aliyuncs.com/download/Claude-MAC.dmg' },
+                { label: 'Windows 版', icon: 'windows', href: 'https://yxaii.oss-cn-beijing.aliyuncs.com/download/Claude-WIN.exe' }
+              ]
+            },
+            {
+              title: '下载 CC Switch',
+              description: '使用 CC Switch 管理 Claude Code 的 API 地址、Key 和模型配置。',
+              actions: [
+                { label: 'Mac 版', icon: 'apple', href: 'https://yxaii.oss-cn-beijing.aliyuncs.com/download/CC-Switch-MAC.dmg' },
+                { label: 'Windows 版', icon: 'windows', href: 'https://yxaii.oss-cn-beijing.aliyuncs.com/download/CC-Switch-WIN.msi' }
+              ]
+            },
+            {
+              title: '配置 Key',
+              description: '在 CC Switch 中新增 Claude 配置，填入控制台提供的 API 地址和 Key，保存后设为当前配置。'
+            }
+          ],
+          command: '',
+          videoTitle: 'Claude Code 软件安装视频教程',
+          videoCopy: '跟随视频完成客户端下载、CC Switch 安装与 Key 配置',
+          note: '配置 API Key 后支持公网访问，实际可访问范围以客户端权限和服务策略为准。'
         },
-        windows: {
-          title: 'Claude Code · Windows',
-          steps: ['以管理员身份打开 PowerShell，运行下方命令启用 WSL，然后重启 Windows。', '重启后打开 WSL 终端并安装 Node.js。', '在 WSL 中运行"npm install -g @anthropic-ai/claude-code"，配置 API 后启动 claude。'],
-          command: 'wsl --install',
-          note: 'WSL 安装和 Claude Code 安装需要分两阶段完成，重启后请在 Linux 终端继续。'
+        terminal: {
+          title: 'Claude Code · 终端',
+          steps: ['确认已安装 Node.js 18 或更高版本。', '在系统终端全局安装 Claude Code。', '配置控制台中的 API 地址和 Key 后启动 claude。'],
+          command: 'npm install -g @anthropic-ai/claude-code && claude',
+          note: 'Windows 用户可在 PowerShell 或 WSL 中执行；请在同一终端环境内完成安装与运行。'
         },
         cursor: {
           title: 'Claude Code · Cursor',
@@ -1059,6 +1122,23 @@
       window.setInterval(refreshTerraStatus, 60_000);
     }
 
+    const installationMethods = {
+      codex: [
+        { id: 'software', name: '软件', description: '下载 Codex，配置 API Key', icon: 'box' },
+        { id: 'terminal', name: '终端', description: '通过系统终端快速安装 Codex', icon: 'terminal' },
+        { id: 'cursor', name: 'Cursor', description: '在编辑器中配置自定义 API 服务', icon: 'cursor' },
+        { id: 'cli', name: 'CLI', description: '配置命令行环境并启动 Codex', icon: 'code' },
+        { id: 'curl', name: 'curl', description: '直接验证 API 地址与密钥是否可用', icon: 'globe' }
+      ],
+      claude: [
+        { id: 'software', name: '软件', description: '下载 Claude，配置 API Key', icon: 'box' },
+        { id: 'terminal', name: '终端', description: '通过系统终端快速安装 Claude Code', icon: 'terminal' },
+        { id: 'cursor', name: 'Cursor', description: '在编辑器中配置自定义 API 服务', icon: 'cursor' },
+        { id: 'cli', name: 'CLI', description: '配置命令行环境并启动 Claude Code', icon: 'code' },
+        { id: 'curl', name: 'curl', description: '直接验证 API 地址与密钥是否可用', icon: 'globe' }
+      ]
+    };
+
     const productNames = { codex: 'Codex', claude: 'Claude Code' };
     const productTabs = [...document.querySelectorAll('[data-product]')];
     const installPanel = document.querySelector('[data-install-panel]');
@@ -1068,15 +1148,46 @@
     const modalTitle = document.querySelector('[data-modal-title]');
     const modalEyebrow = document.querySelector('[data-modal-eyebrow]');
     const guideSteps = document.querySelector('[data-guide-steps]');
+    const downloadFlow = document.querySelector('[data-download-flow]');
     const commandWrap = document.querySelector('.command-wrap');
     const commandOutput = document.querySelector('[data-command]');
     const copyButton = document.querySelector('[data-copy-command]');
     const copyStatus = document.querySelector('[data-copy-status]');
+    const modalVideoTitle = document.querySelector('[data-modal-video-title]');
+    const modalVideoCopy = document.querySelector('[data-modal-video-copy]');
     const modalNote = document.querySelector('[data-modal-note]');
     const pageHeader = document.querySelector('.topbar');
     const pageMain = document.querySelector('main');
     let activeProduct = 'codex';
     let lastTrigger = null;
+
+    function renderMethodList(product) {
+      methodPanel.replaceChildren();
+      installationMethods[product].forEach((method) => {
+        const button = document.createElement('button');
+        button.className = 'method';
+        button.type = 'button';
+        button.dataset.method = method.id;
+
+        const icon = document.createElement('span');
+        icon.className = 'method__icon';
+        icon.innerHTML = `<svg class="icon" aria-hidden="true"><use href="#i-${method.icon}"></use></svg>`;
+
+        const name = document.createElement('span');
+        name.className = 'method__name';
+        name.textContent = method.name;
+
+        const description = document.createElement('span');
+        description.className = 'method__description';
+        description.textContent = method.description;
+
+        const action = document.createElement('span');
+        action.className = 'method__action';
+        action.innerHTML = '查看教程<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>';
+        button.append(icon, name, description, action);
+        methodPanel.append(button);
+      });
+    }
 
     function selectProduct(product) {
       activeProduct = product;
@@ -1088,6 +1199,7 @@
       installPanel.dataset.activeProduct = product;
       methodPanel.setAttribute('aria-labelledby', `tab-${product}`);
       installContext.textContent = `正在查看 ${productNames[product]} 安装教程`;
+      renderMethodList(product);
     }
 
     function renderSteps(steps) {
@@ -1099,14 +1211,61 @@
       });
     }
 
+    function renderDownloads(downloads) {
+      downloadFlow.replaceChildren();
+      downloads.forEach((download, index) => {
+        const step = document.createElement('section');
+        step.className = 'download-step';
+
+        const number = document.createElement('span');
+        number.className = 'download-step__number';
+        number.textContent = String(index + 1);
+
+        const content = document.createElement('div');
+        content.className = 'download-step__content';
+
+        const title = document.createElement('h3');
+        title.className = 'download-step__title';
+        title.textContent = download.title;
+
+        const description = document.createElement('p');
+        description.className = 'download-step__description';
+        description.textContent = download.description;
+        content.append(title, description);
+
+        if (download.actions) {
+          const actions = document.createElement('div');
+          actions.className = 'download-actions';
+          download.actions.forEach((action) => {
+            const link = document.createElement('a');
+            link.className = 'button download-link';
+            link.href = action.href;
+            link.target = '_blank';
+            link.rel = 'noreferrer';
+            link.innerHTML = `<svg class="icon" aria-hidden="true"><use href="#i-${action.icon}"></use></svg><span>${action.label}</span>`;
+            actions.append(link);
+          });
+          content.append(actions);
+        }
+
+        step.append(number, content);
+        downloadFlow.append(step);
+      });
+    }
+
     function renderModal(content) {
       modalEyebrow.textContent = content.eyebrow || '安装教程';
       modalTitle.textContent = content.title;
-      renderSteps(content.steps);
+      guideSteps.hidden = !content.steps;
+      if (content.steps) renderSteps(content.steps);
+      downloadFlow.hidden = !content.downloads;
+      if (content.downloads) renderDownloads(content.downloads);
       commandWrap.hidden = !content.command;
-      commandOutput.textContent = content.command;
+      commandOutput.textContent = content.command || '';
       copyStatus.textContent = '';
       copyButton.querySelector('span').textContent = '复制';
+      modalVideoTitle.textContent = content.videoTitle || '视频教程';
+      modalVideoCopy.textContent = content.videoCopy || '视频地址配置后将在这里播放';
       modalNote.textContent = content.note;
       modal.hidden = false;
       document.body.classList.add('modal-open');
@@ -1117,7 +1276,6 @@
 
     function openInstallGuide(product, method, trigger) {
       lastTrigger = trigger;
-      selectProduct(product);
       renderModal(installationContent[product][method]);
     }
 
@@ -1183,8 +1341,10 @@
         nextTab.focus();
       });
     });
-    document.querySelectorAll('[data-method]').forEach((button) => {
-      button.addEventListener('click', () => openInstallGuide(activeProduct, button.dataset.method, button));
+    methodPanel.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-method]');
+      if (!button) return;
+      openInstallGuide(activeProduct, button.dataset.method, button);
     });
     document.querySelector('[data-recharge-guide]').addEventListener('click', (event) => openRechargeGuide(event.currentTarget));
     document.querySelector('[data-modal-close]').addEventListener('click', closeModal);
