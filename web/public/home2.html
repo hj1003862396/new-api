@@ -238,8 +238,8 @@
     /* Guides Grid */
     .guides-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
     }
 
     .guide-card {
@@ -385,6 +385,21 @@
       word-break: break-all;
     }
 
+    .guide-video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 7px;
+      overflow: hidden;
+      margin-top: 8px;
+      border: 1px solid #1e293b;
+    }
+    .guide-video video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
     .config-box {
       background: #0f172a;
       color: #e2e8f0;
@@ -554,38 +569,34 @@
               </div>
             </div>
 
-            <!-- Step 2: 配置文件 -->
+            <!-- Step 2: 下载 CC Switch -->
             <div class="step-item">
               <span class="step-number">2</span>
               <div class="step-content">
-                <div class="step-title">编辑本地配置文件</div>
-                <div class="step-desc">进入当前用户主目录的 <code style="font-family:var(--font-mono);background:#f1f5f9;padding:1px 5px;border-radius:3px;">.codex</code> 文件夹下创建/编辑两个文件：</div>
-                
-                <span class="file-path">~/.codex/auth.json (或 C:\Users\用户名\.codex\auth.json)</span>
-                <div class="config-box">{<span class="hl-key">"OPENAI_API_KEY"</span>: <span class="hl-str">"sk-你的专属Key"</span>}</div>
-
-                <div style="height: 6px;"></div>
-                <span class="file-path">~/.codex/config.toml</span>
-                <div class="config-box"><span class="hl-key">model_provider</span> = <span class="hl-str">"yunxi"</span>
-<span class="hl-key">model</span> = <span class="hl-str">"gemini-3.7-flash"</span>
-<span class="hl-key">model_reasoning_effort</span> = <span class="hl-str">"high"</span>
-<span class="hl-key">disable_response_storage</span> = true
-<span class="hl-key">preferred_auth_method</span> = <span class="hl-str">"apikey"</span>
-
-[model_providers.yunxi]
-<span class="hl-key">name</span> = <span class="hl-str">"yunxi"</span>
-<span class="hl-key">base_url</span> = <span class="hl-str">"https://yxai.pro/v1"</span>
-<span class="hl-key">wire_api</span> = <span class="hl-str">"responses"</span>
-<span class="hl-key">requires_openai_auth</span> = true</div>
+                <div class="step-title">下载 CC Switch 切换工具</div>
+                <div class="step-desc">用于管理和无缝切换 Codex API 配置：</div>
+                <div class="download-btns">
+                  <a href="https://yxaii.oss-cn-beijing.aliyuncs.com/download/CC-Switch-MAC.dmg" target="_blank" rel="noreferrer" class="btn-dl">
+                    <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M16.4 12.2c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.7-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-2.9-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3.1-.7 1.4 0 1.9.7 3.1.7 1.3 0 2.1-1.2 2.8-2.3.9-1.3 1.2-2.5 1.2-2.6-.1 0-2.9-1.1-2.9-3.5Z"/><path d="M14.2 5.7c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2-.5 2.7-1.3Z"/></svg>
+                    <span>Mac 版 (.dmg)</span>
+                  </a>
+                  <a href="https://yxaii.oss-cn-beijing.aliyuncs.com/download/CC-Switch-WIN.msi" target="_blank" rel="noreferrer" class="btn-dl">
+                    <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M3 5.5 10.5 4v7H3V5.5ZM12.5 3.7 21 2v9h-8.5V3.7ZM3 13h7.5v7L3 18.5V13ZM12.5 13H21v9l-8.5-1.7V13Z"/></svg>
+                    <span>Windows 版 (.msi)</span>
+                  </a>
+                </div>
               </div>
             </div>
 
-            <!-- Step 3: 完成 -->
+            <!-- Step 3: 配置并查看视频 -->
             <div class="step-item">
               <span class="step-number">3</span>
               <div class="step-content">
-                <div class="step-title">保存并启动客户端</div>
-                <div class="step-desc">保存文件后打开 Codex 客户端即可直接调用，如遇问题重启客户端即可。</div>
+                <div class="step-title">配置 API 密钥</div>
+                <div class="step-desc">打开 CC Switch，新增配置并填入 API 地址与 Key，设为启用即可：</div>
+                <div class="guide-video">
+                  <video controls playsinline preload="metadata" src="https://yxaii.oss-cn-beijing.aliyuncs.com/video/codex.mp4"></video>
+                </div>
               </div>
             </div>
 
@@ -626,85 +637,39 @@
               </div>
             </div>
 
-            <!-- Step 2: 配置文件 -->
+            <!-- Step 2: 下载 CC Switch -->
             <div class="step-item">
               <span class="step-number">2</span>
               <div class="step-content">
-                <div class="step-title">设置环境变量/配置文件</div>
-                <div class="step-desc">将 API 路由与令牌写入环境配置中持久生效：</div>
-                
-                <span class="file-path">Mac / Linux: 编辑 ~/.zshrc 或 ~/.bashrc 追加</span>
-                <div class="config-box">export ANTHROPIC_BASE_URL=<span class="hl-str">"https://yxai.pro"</span>
-export ANTHROPIC_AUTH_TOKEN=<span class="hl-str">"sk-你的专属Key"</span>
-export API_TIMEOUT_MS=<span class="hl-str">"300000"</span></div>
-
-                <div style="height: 6px;"></div>
-                <span class="file-path">Windows (PowerShell 环境变量配置)</span>
-                <div class="config-box">[Environment]::SetEnvironmentVariable(<span class="hl-str">"ANTHROPIC_BASE_URL"</span>, <span class="hl-str">"https://yxai.pro"</span>, <span class="hl-str">"User"</span>)
-[Environment]::SetEnvironmentVariable(<span class="hl-str">"ANTHROPIC_AUTH_TOKEN"</span>, <span class="hl-str">"sk-你的专属Key"</span>, <span class="hl-str">"User"</span>)</div>
+                <div class="step-title">下载 CC Switch 管理工具</div>
+                <div class="step-desc">使用 CC Switch 便捷管理 Claude Code 的 API 地址、Key 和模型配置：</div>
+                <div class="download-btns">
+                  <a href="https://yxaii.oss-cn-beijing.aliyuncs.com/download/CC-Switch-MAC.dmg" target="_blank" rel="noreferrer" class="btn-dl">
+                    <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M16.4 12.2c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.7-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-2.9-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3.1-.7 1.4 0 1.9.7 3.1.7 1.3 0 2.1-1.2 2.8-2.3.9-1.3 1.2-2.5 1.2-2.6-.1 0-2.9-1.1-2.9-3.5Z"/><path d="M14.2 5.7c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2-.5 2.7-1.3Z"/></svg>
+                    <span>Mac 版 (.dmg)</span>
+                  </a>
+                  <a href="https://yxaii.oss-cn-beijing.aliyuncs.com/download/CC-Switch-WIN.msi" target="_blank" rel="noreferrer" class="btn-dl">
+                    <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M3 5.5 10.5 4v7H3V5.5ZM12.5 3.7 21 2v9h-8.5V3.7ZM3 13h7.5v7L3 18.5V13ZM12.5 13H21v9l-8.5-1.7V13Z"/></svg>
+                    <span>Windows 版 (.msi)</span>
+                  </a>
+                </div>
               </div>
             </div>
 
-            <!-- Step 3: 完成 -->
+            <!-- Step 3: 配置并查看视频 -->
             <div class="step-item">
               <span class="step-number">3</span>
               <div class="step-content">
-                <div class="step-title">启动使用</div>
-                <div class="step-desc">打开软件或在终端中运行即可自动读取该配置，畅享 Claude 旗舰模型。</div>
+                <div class="step-title">填入 Key 与地址</div>
+                <div class="step-desc">在 CC Switch 中新增 Claude Code 配置，输入专属 Key 并开启使用：</div>
+                <div class="guide-video">
+                  <video controls playsinline preload="metadata" src="https://yxaii.oss-cn-beijing.aliyuncs.com/video/claude.mp4"></video>
+                </div>
               </div>
             </div>
 
             <div class="step-tip">
               🚀 提示：令牌需以 sk- 开头，可在顶部导航“获取 API 令牌”直接添加。
-            </div>
-          </div>
-        </article>
-
-        <!-- 3. cURL / 第三方软件直接配置 -->
-        <article class="guide-card">
-          <div class="guide-card__header">
-            <div class="guide-card__title-wrap">
-              <div class="guide-card__icon">
-                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9S14.3 18.5 12 21c-2.3-2.5-3.5-5.5-3.5-9S9.7 5.5 12 3Z"/></svg>
-              </div>
-              <h3 class="guide-card__title">cURL / 第三方软件配置</h3>
-            </div>
-            <span class="guide-card__badge">通用接入</span>
-          </div>
-          <div class="guide-card__body">
-            <!-- Step 1: 软件接入参数 -->
-            <div class="step-item">
-              <span class="step-number">1</span>
-              <div class="step-content">
-                <div class="step-title">桌面对话客户端参数</div>
-                <div class="step-desc">支持 Chatbox、NextChat、Cherry Studio 等，按如下参数填写：</div>
-                <div class="config-box"><span class="hl-comment"># 接口地址</span>
-<span class="hl-key">API Host</span> = <span class="hl-str">https://yxai.pro</span>
-<span class="hl-key">API Path</span> = <span class="hl-str">/v1</span>
-
-<span class="hl-comment"># 认证密钥</span>
-<span class="hl-key">API Key</span>  = <span class="hl-str">sk-你的专属Key</span></div>
-              </div>
-            </div>
-
-            <!-- Step 2: cURL 验证 -->
-            <div class="step-item">
-              <span class="step-number">2</span>
-              <div class="step-content">
-                <div class="step-title">cURL 测试连通性</div>
-                <div class="step-desc">在终端直接发送请求测试连通性：</div>
-                <div class="config-box">curl https://yxai.pro/v1/chat/completions \
-  -H <span class="hl-str">"Content-Type: application/json"</span> \
-  -H <span class="hl-str">"Authorization: Bearer sk-你的专属Key"</span> \
-  -d '{
-    <span class="hl-key">"model"</span>: <span class="hl-str">"gpt-4o"</span>,
-    <span class="hl-key">"messages"</span>: [{<span class="hl-key">"role"</span>: <span class="hl-str">"user"</span>, <span class="hl-key">"content"</span>: <span class="hl-str">"Hello!"</span>}]
-  }'</div>
-              </div>
-            </div>
-
-            <div class="step-tip">
-              📌 支持市面绝大多数 OpenAI / Claude 标准兼容软件，填入上方地址即可快速接入。
             </div>
           </div>
         </article>
